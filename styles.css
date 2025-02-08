@@ -4,19 +4,30 @@ body, html {
     padding: 0;
     font-family: Arial, sans-serif;
     box-sizing: border-box;
+    background-color: #e8f9fd;
+    scroll-behavior: smooth;
+    background: url('images/bg.jpg') no-repeat center center/cover;
+    
 }
 
 /* Header and Navigation */
 header {
     background-color: #51D3D3;
     color: #fff;
-    padding: 10px 20px;
+    padding: 15px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 10;
+    height: 100px;
+    overflow: hidden;
 }
 
 nav {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    z-index: 10;
 }
 
 #logo {
@@ -24,23 +35,23 @@ nav {
     align-items: center;
 }
 
-
-
 #logo img {
     width: 50px;
     height: auto;
     margin-right: 10px;
 }
+
 #logo img:hover {
-    zoom: 120%;
+    transform: scale(1.2); /* More responsive zoom */
 }
 
 #logo p {
     font-size: 1.5rem;
     font-weight: bold;
 }
+
 #logo p:hover {
-    color: #0019fd;
+    color: #2a00d1;
 }
 
 nav ul {
@@ -65,7 +76,7 @@ nav ul li a {
 nav ul li a:hover {
     color: #0019fd;
     font-weight: bolder;
-    font-size: larger;
+
 }
 
 nav ul li input#conditionInput {
@@ -89,6 +100,7 @@ nav ul li button {
 nav ul li button:hover {
     background-color: #0011ff;
 }
+
 
 /* Floating Social Media Icons */
 .social-icons {
@@ -122,3 +134,210 @@ nav ul li button:hover {
     transform: scale(1.3);
     background-color: #00aaff;
 }
+
+/* Hero Section */
+.hero {
+    background: url('images/bg.jpg') no-repeat center center/cover;
+
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+    z-index: 1; /* Ensure the hero section is behind the navigation */
+}
+
+.hero h1 {
+    font-size: 4rem;
+    font-weight: bold;
+    margin: 0;
+}
+
+.hero p {
+    font-size: 1.5rem;
+    margin: 20px 0;
+    line-height: 1.6;
+    max-width: 600px;
+    
+}
+
+
+
+
+.hero button {
+    background: #00a8cc; /* Aqua blue */
+    border: none;
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+    border-radius: 8px;
+    font-weight: bold;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.hero button:hover {
+    background: #007b92; /* Darker aqua */
+}
+
+.team-member {
+    background-color: #fff;
+    padding: 1.5rem;
+    margin: 1rem 0;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.team-member h2 {
+    font-size: 1.8rem;
+    color: #333;
+    margin-bottom: 0.8rem;
+}
+
+.team-member p {
+    font-size: 1.1rem;
+    color: #555;
+    line-height: 1.5;
+}
+.form-container {
+    display: flex;
+    justify-content: center;   /* Center the form horizontally */
+    align-items: center;       /* Center the form vertically */
+    height: 100vh;             /* Full viewport height */
+}
+
+.form {
+    padding: 2rem;
+    max-width: 600px;
+    width: 100%;               /* Make sure it resizes nicely on smaller screens */
+    font-family: Arial, sans-serif;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.form h1 {
+    font-size: 2rem;
+    text-align: center;
+    color: #333;
+    margin-bottom: 1.5rem;
+}
+
+.form div {
+    margin-bottom: 1.2rem;
+}
+
+.form label {
+    display: block;
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+.form input,
+.form textarea {
+    width: 100%;
+    padding: 0.8rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.form button {
+    width: 100%;
+    padding: 1rem;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.form button:hover {
+    background-color: #45a049;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 3rem; /* Adjust hero title size */
+    }
+
+    .hero p {
+        font-size: 1.2rem; /* Adjust hero paragraph size */
+    }
+
+    .social-icons {
+        left: 10px; /* Move icons closer on smaller screens */
+    }
+
+    nav ul li {
+        margin: 0 5px; /* Adjust spacing on smaller screens */
+    }
+
+    #logo img {
+        width: 40px; /* Adjust logo size on mobile */
+    }
+
+    nav ul li input#conditionInput {
+        width: 150px; /* Adjust input size */
+    }
+
+    nav ul li button {
+        font-size: 0.9rem; /* Make button text smaller on mobile */
+    }
+}
+
+@media (max-width: 480px) {
+    .hero h1 {
+        font-size: 2.5rem; /* Further adjust title on small screens */
+    }
+
+    .hero p {
+        font-size: 1rem; /* Reduce paragraph size */
+        max-width: 100%; /* Full width for small screens */
+    }
+
+    .social-icons {
+        gap: 10px; /* Reduce gap between icons */
+    }
+
+    nav ul {
+        flex-direction: column; /* Stack nav items vertically on mobile */
+        align-items: flex-start;
+    }
+
+    nav ul li {
+        margin-bottom: 10px; /* Space out nav items vertically */
+    }
+}
+/* Initially hide the navigation menu on mobile */
+@media (max-width: 768px) {
+    nav ul {
+        display: none;
+        flex-direction: column; /* Stack the nav items */
+        width: 100%;
+        background-color: #51D3D3;
+        padding: 10px 0;
+    }
+
+    nav ul.show {
+        display: flex; /* Show the menu when 'show' class is added */
+    }
+
+    nav ul li {
+        margin-bottom: 10px; /* Space out links vertically */
+    }
+
+    .hamburger {
+        display: block; /* Show the hamburger icon on mobile */
+        cursor: pointer;
+        z-index: 100;
+    }
+}
+

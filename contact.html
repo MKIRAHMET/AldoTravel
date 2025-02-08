@@ -11,12 +11,24 @@
 <body>
     <div id="header"></div>
 
-
-    <section class="hero">
-        <h1>Explore the World with Us</h1>
-        <p>Your next adventure is just a click away. Let us guide you to the most beautiful places on Earth.</p>
-        <button>Start Your Journey</button>
+    <div class="form-container">
+    <section class="form">
+        <h1>Contact Us</h1>
+        <div>
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" required>
+          </div>
+          <div>
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+          </div>
+          <div>
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="5" required></textarea>
+          </div>
+          <button id="contactBtn" type="submit" onclick="thankyou()">Submit</button>
     </section>
+    </div>
     
     <div id='social-icons'class="social-icons"></div>
     <script src="travel_recommendation.js"></script>
