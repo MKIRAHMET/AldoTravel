@@ -123,6 +123,7 @@ function searchCondition() {
           ${results}`;
       } else {
         resultDiv.innerHTML = '<p>No results found. Try another search term.</p>';
+        
       }
     })
     .catch(error => {
@@ -149,15 +150,16 @@ function getCountryTime(countryName) {
   return currentTime;
 }
 
-// Event listener for search input
+
 document.getElementById('searchInput').addEventListener('input', debounceSearch);
 
-// Function to close results
 function closeResults() {
-  document.getElementById('result').style.display = 'none';
+  const resultDiv = document.getElementById('result');
+  resultDiv.classList.remove('show');  // Hide the result section
+  document.getElementById('overlay').style.display = 'none';  // Hide overlay
 }
 
-// Function to show results
+
 function showResults() {
   document.getElementById('result').classList.add('show');
   document.getElementById('overlay').style.display = 'block';
