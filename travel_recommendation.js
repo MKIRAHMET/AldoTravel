@@ -23,7 +23,18 @@ window.onload = function () {
     .then(data => {
       document.getElementById('social-icons').innerHTML = data;
     });
+  
+  fetch('aboutus.html')
+   .then(response => response.text())
+    .then(data => {
+      document.getElementById('aboutus').innerHTML = data;
+    });
 
+  fetch('contact.html')
+  .then(response => response.text())
+   .then(data => {
+      document.getElementById('contact').innerHTML = data;
+    });
 
   setTimeout(() => {
     const closeResult = document.getElementById('closeResult');
