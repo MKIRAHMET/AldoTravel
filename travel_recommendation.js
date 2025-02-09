@@ -1,14 +1,14 @@
 window.onload = function () {
-
+  // Fetch header and other sections
   fetch('essentials/header.html')
     .then(response => response.text())
     .then(data => {
       document.getElementById('header').innerHTML = data;
       
- 
       const btnSearch = document.getElementById('btnSearch');
       const btnClearSearch = document.getElementById('btnClearSearch');
       btnClearSearch.addEventListener('click', clearSearch);
+
       if (btnSearch) {
         btnSearch.addEventListener('click', function () {
           searchCondition();
@@ -17,13 +17,13 @@ window.onload = function () {
       }
     });
 
-
+  // Fetch other sections (social, about us, contact)
   fetch('essentials/social.html')
     .then(response => response.text())
     .then(data => {
       document.getElementById('social-icons').innerHTML = data;
     });
-  
+
   fetch('aboutus.html')
    .then(response => response.text())
     .then(data => {
@@ -36,31 +36,27 @@ window.onload = function () {
       document.getElementById('contact').innerHTML = data;
     });
 
-  setTimeout(() => {
-    const closeResult = document.getElementById('closeResult');
-    if (closeResult) {
-      closeResult.addEventListener('click', closeResults);
-    }
-  }, 1000); 
+  // Display locations initially
+  displayLocations();
 };
 
-
+// Function to thank user
 function thankyou() {
   alert('Thank you for contacting us!');
 }
 
-
+// Debounce logic to limit search frequency
 let timeout;
-
 function debounceSearch() {
-  clearTimeout(timeout); // 
-  timeout = setTimeout(searchCondition, 500); 
+  clearTimeout(timeout);
+  timeout = setTimeout(searchCondition, 500);
 }
+
+// Search condition and fetching results
 function searchCondition() {
   const input = document.getElementById('searchInput').value.toLowerCase();
   const resultDiv = document.getElementById('result');
   resultDiv.innerHTML = ''; // Clear previous results
-
 
   if (!input) {
     resultDiv.innerHTML = '<p>Please enter a valid search term.</p>';
@@ -72,17 +68,14 @@ function searchCondition() {
     .then(data => {
       let results = '';
 
-
       data.countries.forEach(country => {
         if (country.name.toLowerCase().includes(input)) {
-          // Add country time
           const countryTime = getCountryTime(country.name);
           results += `
             <h2>${country.name}</h2>
             <p><strong>Current Time:</strong> ${countryTime}</p>
           `;
         }
-
 
         country.cities.forEach(city => {
           if (city.name.toLowerCase().includes(input) || city.description.toLowerCase().includes(input)) {
@@ -95,7 +88,6 @@ function searchCondition() {
           }
         });
       });
-
 
       data.temples.forEach(temple => {
         if (temple.name.toLowerCase().includes(input) || temple.description.toLowerCase().includes(input)) {
@@ -119,7 +111,6 @@ function searchCondition() {
         }
       });
 
- 
       if (results) {
         resultDiv.innerHTML = `
           <button id="closeResult" onclick="closeResults()">Close Results</button>
@@ -134,9 +125,8 @@ function searchCondition() {
     });
 }
 
-
+// Function to get the current time for a country
 function getCountryTime(countryName) {
-
   const timeZones = {
     'Australia': 'Australia/Sydney',
     'Japan': 'Asia/Tokyo',
@@ -144,43 +134,93 @@ function getCountryTime(countryName) {
     'United States': 'America/New_York',
     'Cambodia': 'Asia/Phnom_Penh', 
     'India': 'Asia/Kolkata', 
-    'Bora Bora': 'Pacific/Tahiti', 
-
+    'Bora Bora': 'Pacific/Tahiti',
   };
 
-  
   const timeZone = timeZones[countryName] || 'UTC';
-
   const options = { timeZone: timeZone, hour12: true, hour: 'numeric', minute: 'numeric', second: 'numeric' };
   const currentTime = new Date().toLocaleTimeString('en-US', options);
-
   return currentTime;
 }
 
-
-
+// Event listener for search input
 document.getElementById('searchInput').addEventListener('input', debounceSearch);
 
-
+// Function to close results
 function closeResults() {
-  const resultDiv = document.getElementById('result');
-  resultDiv.style.display = 'none'; // Hide the results
+  document.getElementById('result').style.display = 'none';
 }
 
-
+// Function to show results
 function showResults() {
   document.getElementById('result').classList.add('show');
   document.getElementById('overlay').style.display = 'block';
 }
 
 
-function closeResults() {
-  document.getElementById('result').classList.remove('show');
-  document.getElementById('overlay').style.display = 'none';
-}
-
 function clearSearch() {
   document.getElementById('searchInput').value = '';
   closeResults();
   document.getElementById('result').innerHTML = ''; 
+}
+
+function displayLocations() {
+  fetch('travel_recommendation_api.json')
+    .then(response => response.json())
+    .then(data => {
+      let results = '';
+
+      data.countries.forEach(country => {
+        results += `
+          <div class="country">
+            <h2>${country.name}</h2>
+        `;
+
+        if (country.cities && country.cities.length > 0) {
+          results += `<h3>Cities</h3>`;
+          country.cities.forEach(city => {
+            results += `
+              <div class="city">
+                <h4>${city.name}</h4>
+                <img src="${city.imageUrl}" alt="${city.name}" />
+                <p>${city.description}</p>
+              </div>
+            `;
+          });
+        }
+
+        results += `</div>`;
+      });
+
+      if (data.temples && data.temples.length > 0) {
+        results += `<h3>Temples</h3>`;
+        data.temples.forEach(temple => {
+          results += `
+            <div class="temple">
+              <h4>${temple.name}</h4>
+              <img src="${temple.imageUrl}" alt="${temple.name}" />
+              <p>${temple.description}</p>
+            </div>
+          `;
+        });
+      }
+
+      if (data.beaches && data.beaches.length > 0) {
+        results += `<h3>Beaches</h3>`;
+        data.beaches.forEach(beach => {
+          results += `
+            <div class="beach">
+              <h4>${beach.name}</h4>
+              <img src="${beach.imageUrl}" alt="${beach.name}" />
+              <p>${beach.description}</p>
+            </div>
+          `;
+        });
+      }
+
+      document.getElementById('locations').innerHTML = results;
+    })
+    .catch(error => {
+      console.error('Error fetching data:', error);
+    });
 }
